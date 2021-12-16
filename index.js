@@ -13,7 +13,7 @@ const dataFull = [
     name: "quo vero reiciendis velit similique earum",
     email: "Jayne_Kuhic@sydney.com",
     body: "est natus enim nihil est dolore omnis voluptatem numquam et omnis occaecati quod ullam at" +
-      "  voluptatem error expedita pariatur nihil sint nostrum voluptatem reiciendis et"
+      " voluptatem error expedita pariatur nihil sint nostrum voluptatem reiciendis et"
   },
   {
     postId: 1,
@@ -21,19 +21,10 @@ const dataFull = [
     name: "odio adipisci rerum aut animi",
     email: "Nikita@garfield.biz",
     body: "quia molestiae reprehenderit quasi aspernatur aut expedita occaecati aliquam eveniet laudantium  " +
-      "omnis quibusdam delectus saepe quia accusamus maiores nam est    cum et ducimus et vero voluptates excepturi deleniti ratione"
+      "omnis quibusdam delectus saepe quia accusamus maiores nam est " +
+      "cum et ducimus et vero voluptates excepturi deleniti ratione"
   },
 ]
-
-const dataTHead = ['id', 'name', 'email']
-
-const root = document.querySelector('#root');
-const table = document.createElement('table');
-const tBody = document.createElement('tbody');
-
-const body = table.appendChild(tBody);
-root.appendChild(table);
-
 
 const generateTableHead = (table, data) => {
   const thead = table.createTHead();
@@ -49,24 +40,36 @@ const generateTableHead = (table, data) => {
   )
 }
 
+const createCell = (element, data) => {
+  const cell = element.insertCell();
+  const text = document.createTextNode(data);
+
+  cell.appendChild(text);
+}
+
 const generateTableBody = (tbody, data) => {
+
   data.forEach(({id, name, email}) => {
+
     const row = tbody.insertRow();
+    Object.values({id, name, email})
+      .forEach((item) => createCell(row, item))
 
-    const cellId = row.insertCell();
-    const textId = document.createTextNode(id);
-
-    const cellName = row.insertCell();
-    const textName = document.createTextNode(name);
-
-    const cellEmail = row.insertCell();
-    const textEmail = document.createTextNode(email);
-
-    cellId.appendChild(textId);
-    cellName.appendChild(textName);
-    cellEmail.appendChild(textEmail);
   })
 }
 
-generateTableBody(body, dataFull);
-generateTableHead(table, dataTHead);
+const createTable = (dataTHead, dataBody) => {
+
+  const root = document.querySelector('#root');
+  const table = document.createElement('table');
+  const tBody = document.createElement('tbody');
+
+  const body = table.appendChild(tBody);
+
+  root.appendChild(table);
+
+  generateTableBody(body, dataBody);
+  generateTableHead(table, dataTHead);
+}
+
+createTable(['id', 'name', 'email'], dataFull)
