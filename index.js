@@ -1,17 +1,9 @@
-const URL = 'https://jsonplaceholder.typicode.com/comments'
-const dataTHead = ['id', 'name', 'email', 'letters amount', 'unique letters']
-
-const root = document.querySelector('#root');
-const table = document.createElement('table');
-const tBody = document.createElement('tbody');
-
-const body = table.appendChild(tBody);
-root.appendChild(table);
+const URL = 'https://jsonplaceholder.typicode.com/comments';
 
 const countUniqueLetters = (string) => {
   const set = new Set(string.replace(/\s+/g, '').split(''));
   return set.size;
-}
+};
 
 const countUnrepeatedLetters = (string) => {
   const lettersArr = string.replace(/\s+/g, '').split('');
@@ -22,7 +14,7 @@ const countUnrepeatedLetters = (string) => {
     lettersArr.filter(letter => letter === el).length === 1 && ++count
   });
   return count;
-}
+};
 
 const generateTableHead = (table, data) => {
   const thead = table.createTHead();
@@ -36,43 +28,51 @@ const generateTableHead = (table, data) => {
       thRow.appendChild(cell);
     }
   )
-}
+};
+
+const createCell = (element, data) => {
+  const cell = element.insertCell();
+  const text = document.createTextNode(data);
+
+  cell.appendChild(text);
+};
 
 const generateTableBody = (tbody, data) => {
+
   data.forEach(({id, name, email, body}) => {
     const row = tbody.insertRow();
 
-    const cellId = row.insertCell();
-    const textId = document.createTextNode(id);
+    const rowCellsValues = Object.values({
+      id,
+      name,
+      email
+    }).concat(countUniqueLetters(body), countUnrepeatedLetters(body))
 
-    const cellName = row.insertCell();
-    const textName = document.createTextNode(name);
-
-    const cellEmail = row.insertCell();
-    const textEmail = document.createTextNode(email);
-
-    const cellAmount = row.insertCell();
-    const textAmount = document.createTextNode(`${countUniqueLetters(body)}`);
-
-    const cellUnique = row.insertCell();
-    const textUnique = document.createTextNode(`${countUnrepeatedLetters(body)}`);
-
-    cellId.appendChild(textId);
-    cellName.appendChild(textName);
-    cellEmail.appendChild(textEmail);
-    cellAmount.appendChild(textAmount);
-    cellUnique.appendChild(textUnique);
+    rowCellsValues.forEach(item => createCell(row, item))
   })
-}
-const fillTableData = (url) => {
+};
+
+const fillTableData = (url, body) => {
   fetch(url)
     .then(response => response.json())
     .then(json => generateTableBody(body, json));
 };
 
+const createTable = (dataTHead) => {
 
-generateTableHead(table, dataTHead);
-fillTableData(URL);
+  const root = document.querySelector('#root');
+  const table = document.createElement('table');
+  const tBody = document.createElement('tbody');
+
+  const body = table.appendChild(tBody);
+
+  root.appendChild(table);
+
+  fillTableData(URL, body);
+  generateTableHead(table, dataTHead);
+};
+
+createTable(['id', 'name', 'email', 'letters amount', 'unique letters']);
 
 
 
