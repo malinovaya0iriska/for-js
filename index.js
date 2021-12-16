@@ -33,21 +33,18 @@ root.appendChild(table);
 
 const countUniqueLetters = (string) => {
   const set = new Set(string.replace(/\s+/g, '').split(''));
-  return String(set.size);
+  return set.size;
 }
 
 const countUnrepeatedLetters = (string) => {
-  const lettersArr = string.replace(/\s+/g, '').split('').sort();
-  let stack = [];
+  const lettersArr = string.replace(/\s+/g, '').split('');
+  const set = new Set(string.replace(/\s+/g, '').split(''));
+  let count = 0;
 
-  lettersArr.forEach(letter => {
-    if (stack.includes(letter)) {
-      stack.pop();
-      return
-    }
-    stack.push(letter);
-  })
-  return stack.length;
+  set.forEach(el => {
+    lettersArr.filter(letter => letter === el).length === 1 && ++count
+  });
+  return count;
 }
 
 const generateTableHead = (table, data) => {
@@ -78,10 +75,10 @@ const generateTableBody = (tbody, data) => {
     const textEmail = document.createTextNode(email);
 
     const cellAmount = row.insertCell();
-    const textAmount = document.createTextNode(countUniqueLetters(body));
+    const textAmount = document.createTextNode(`${countUniqueLetters(body)}`);
 
     const cellUnique = row.insertCell();
-    const textUnique = document.createTextNode(countUnrepeatedLetters(body));
+    const textUnique = document.createTextNode(`${countUnrepeatedLetters(body)}`);
 
     cellId.appendChild(textId);
     cellName.appendChild(textName);
