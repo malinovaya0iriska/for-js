@@ -7,34 +7,36 @@ const countUniqueLetters = (string) => {
 
 const countUnrepeatedLetters = (string) => {
   const lettersArr = string.replace(/\s+/g, '').split('');
-  const set = new Set(string.replace(/\s+/g, '').split(''));
-  let count = 0;
+  const frequencyOfLetterOccurrence = 1;
 
-  set.forEach(el => {
-    lettersArr.filter(letter => letter === el).length === 1 && ++count
-  });
-  return count;
+  const occurrenceOfLettersList = lettersArr.reduce((acc, curr) => {
+      acc[curr] = (acc[curr] || 0) + 1;
+      return acc;
+    }, {}
+  );
+  const uniqueLetters = Object.keys(occurrenceOfLettersList);
+
+  return uniqueLetters.filter(key => occurrenceOfLettersList[key] === frequencyOfLetterOccurrence).length
 };
 
 const generateTableHead = (table, data) => {
   const thead = table.createTHead();
   const thRow = thead.insertRow();
 
-  data.forEach(el => {
+  data.forEach(string => {
       const cell = document.createElement('th');
-      const text = document.createTextNode(el);
+      cell.textContent = string;
 
-      cell.appendChild(text);
       thRow.appendChild(cell);
     }
   )
 };
 
-const createCell = (element, data) => {
-  const cell = element.insertCell();
-  const text = document.createTextNode(data);
+const createCell = (el, data) => {
+  const cell = el.insertCell();
+  cell.textContent = data;
 
-  cell.appendChild(text);
+  el.appendChild(cell);
 };
 
 const generateTableBody = (tbody, data) => {
@@ -46,9 +48,9 @@ const generateTableBody = (tbody, data) => {
       id,
       name,
       email
-    }).concat(countUniqueLetters(body), countUnrepeatedLetters(body))
+    }).concat(countUniqueLetters(body), countUnrepeatedLetters(body));
 
-    rowCellsValues.forEach(item => createCell(row, item))
+    rowCellsValues.forEach(value => createCell(row, value));
   })
 };
 
