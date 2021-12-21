@@ -21,11 +21,13 @@ const dataFull = [
     body: "quia molestiae reprehenderit quasi aspernatur\naut expedita occaecati aliquam eveniet laudantium\nomnis quibusdam delectus saepe quia accusamus maiores nam est\ncum et ducimus et vero voluptates excepturi deleniti ratione"
   },
 ]
+const URL = 'https://jsonplaceholder.typicode.com/comments';
 
 const countUniqueLetters = (string) => {
   const set = new Set(string.replace(/\s+/g, '').split(''));
   return set.size;
-}
+};
+
 
 const countUnrepeatedLetters = (string) => {
   const lettersArr = string.replace(/\s+/g, '').split('');
@@ -54,14 +56,15 @@ const generateTableHead = (table, data) => {
   )
 }
 
-const createCell = (element, data) => {
-  const cell = element.insertCell();
-  const text = document.createTextNode(data);
+const createCell = (el, data) => {
+  const cell = el.insertCell();
+  cell.textContent = data;
 
-  cell.appendChild(text);
-}
+  el.appendChild(cell);
+};
 
 const generateTableBody = (tbody, data) => {
+
   data.forEach(({id, name, email, body}) => {
     const row = tbody.insertRow();
 
@@ -76,7 +79,14 @@ const generateTableBody = (tbody, data) => {
   })
 }
 
-const createTable = (dataTHead, dataBody) => {
+
+const fillTableData = (url, body) => {
+  fetch(url)
+    .then(response => response.json())
+    .then(json => generateTableBody(body, json));
+};
+
+const createTable = (dataTHead) => {
 
   const root = document.querySelector('#root');
   const table = document.createElement('table');
@@ -86,8 +96,10 @@ const createTable = (dataTHead, dataBody) => {
 
   root.appendChild(table);
 
-  generateTableBody(body, dataBody);
+  fillTableData(URL, body);
   generateTableHead(table, dataTHead);
-}
+};
 
-createTable(['id', 'name', 'email', 'letters amount', 'unique letters'], dataFull)
+createTable(['id', 'name', 'email', 'letters amount', 'unique letters']);
+
+
