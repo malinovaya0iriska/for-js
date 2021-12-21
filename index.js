@@ -79,11 +79,15 @@ const generateTableBody = (tbody, data) => {
   })
 }
 
-
 const fillTableData = (url, body) => {
-  fetch(url)
+
+  setTimeout(() => fetch(URL)
     .then(response => response.json())
-    .then(json => generateTableBody(body, json));
+    .then(json => generateTableBody(body, json))
+    .then(() => {
+      setVisible('.loading', false);
+      setVisible('tbody', true);
+    }), 3000)
 };
 
 const createTable = (dataTHead) => {
@@ -96,10 +100,10 @@ const createTable = (dataTHead) => {
 
   root.appendChild(table);
 
-  fillTableData(URL, body);
   generateTableHead(table, dataTHead);
+  createLoading(root);
+  fillTableData(URL, body);
 };
 
-createTable(['id', 'name', 'email', 'letters amount', 'unique letters']);
-
+createTable(['id', 'name', 'email', 'letters amount', 'unique letters'])
 
