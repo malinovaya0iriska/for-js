@@ -57,9 +57,10 @@ const generateTableBody = (tbody, data) => {
   })
 };
 
-async function fillTableData(body) {
+const fillTableData = async (body) => {
   const loader = addNode(body, 'tr', 'Loading...');
   const data = await getTableData(URL);
+  data.length = 15;
   loader.remove();
   generateTableBody(body, data);
 };
