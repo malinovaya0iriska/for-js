@@ -17,8 +17,8 @@ const countUnrepeatedLetters = (string) => {
   return uniqueLetters.filter(key => occurrenceOfLettersList[key] === frequencyOfLetterOccurrence).length
 };
 
-const addNode = (parentEl, childEl, content = null) => {
-  const newTag = document.createElement(childEl);
+const addNode = (parentEl, tagName, content = null) => {
+  const newTag = document.createElement(tagName);
   if (content) {
     newTag.textContent = content;
   }
@@ -57,7 +57,7 @@ const generateTableBody = (tbody, data) => {
   })
 };
 
-async function fillTableData(body) {
+const fillTableData = async (body) => {
   const loader = addNode(body, 'tr', 'Loading...');
   const data = await getTableData(URL);
   loader.remove();
