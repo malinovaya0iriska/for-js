@@ -1,0 +1,43 @@
+{
+  "env": {
+    "browser": true,
+    "commonjs": true,
+    "es2021": true
+  },
+  "extends": "eslint:recommended",
+  "parserOptions": {
+    "ecmaVersion": "latest"
+  },
+  "rules": {
+    "no-shadow": "off",
+    "no-alert": "error",
+    "no-debugger": "error",
+    "no-plusplus": "error",
+    "no-unused-vars": "off",
+    "no-undef": "off",
+    "no-magic-numbers": "off",
+    "default-param-last": "off",
+    "no-use-before-define": "off",
+    "semi": [
+      "error",
+      "always"
+    ],
+    "quotes": [
+      "error",
+      "single"
+    ],
+    "no-multiple-empty-lines": [
+      "error",
+      {
+        "max": 1
+      }
+    ]
+  },
+  "settings": {
+    "import/resolver": {
+      "extensions": [
+        ".js"
+      ]
+    }
+  }
+}

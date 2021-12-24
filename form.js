@@ -5,17 +5,14 @@ const createForm = (parentEl, fields) => {
   form.style.gap = '15px';
   form.style.maxWidth = '40%';
 
-  fields.forEach(({labelTitle, id, type}) => {
+  fields.forEach(({ labelTitle, id, type }) => {
     const label = addNode(form, 'label', labelTitle);
     const input = addNode(label, 'input');
     input.id = id;
     input.type = type;
     label.setAttribute('for', id);
-  })
+  });
 
   const submitBtn = addNode(form, 'button', 'Submit');
   submitBtn.type = 'submit';
-}
-
-
-
+};
