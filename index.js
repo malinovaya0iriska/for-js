@@ -20,11 +20,34 @@ const dataFull = [
     email: "Nikita@garfield.biz",
     body: "quia molestiae reprehenderit quasi aspernatur\naut expedita occaecati aliquam eveniet laudantium\nomnis quibusdam delectus saepe quia accusamus maiores nam est\ncum et ducimus et vero voluptates excepturi deleniti ratione"
   },
-];
+]
 const URL = 'https://jsonplaceholder.typicode.com/comments';
+const URLFormSubmit = 'https://postman-echo.com/post';
 const tableHeadings = ['id', 'name', 'email', 'letters amount', 'unique letters'];
 
 const root = document.querySelector('#root');
 
-createTable(root, tableHeadings);
+const inputFields = [
+  {labelTitle: 'Name', id: 'input-name', type: 'text'},
+  {labelTitle: 'Email', id: 'input-email', type: 'email'},
+  {labelTitle: 'Password', id: 'input-password', type: 'password'},
+];
 
+createTable(root, tableHeadings);
+createForm(root, inputFields);
+
+const form = document.querySelector('form');
+
+form.addEventListener('submit', event => {
+  event.preventDefault();
+
+  fetch(URLFormSubmit, {
+    method: 'POST',
+    mode: 'no-cors',
+    body: new FormData(form), redirect: 'follow',
+  })
+    .then(response => console.log(response))
+    .catch(error => console.log('error', error));
+
+  event.currentTarget.reset();
+});
