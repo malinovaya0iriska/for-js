@@ -8,7 +8,9 @@
     "js"
   ],
   "scripts": {
-    "ESLint": "eslint . --ext .js"
+    "ESLint": "eslint . --ext .js",
+    "fix": "npm run ESLint -- --fix"
+
   },
   "repository": {
     "type": "git",
